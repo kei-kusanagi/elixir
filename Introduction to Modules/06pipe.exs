@@ -10,7 +10,9 @@ defmodule PipeTest do
   def sst(the_list) do
     the_list
     |> tl
+    # |> IO.inspect
     |> sum(2)
+    # |> IO.inspect
     |> square
   end
 end
