@@ -4,7 +4,11 @@ defmodule HelloWeb.HelloController do
   def index(conn, _params) do
     conn
     |> put_flash(:info, "Welcome back! 😁")
-    |> put_flash(:error, "Mejor no 😒")
+    ## Da mensaje de error
+    # |> put_flash(:error, "Mejor no 😒")
+    ## Pone todo en texto plano
+    # |> put_resp_content_type("text/plain")
+    |> assign(:var, "I am a string")
     |> render("index.html")
     # render conn, "index.html"
   end

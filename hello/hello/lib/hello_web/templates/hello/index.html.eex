@@ -7,4 +7,6 @@
         say Hello ro Frank
         </a>
     </p>
+    <p>Value is: <%= @var %> </p>
+
 </div>
