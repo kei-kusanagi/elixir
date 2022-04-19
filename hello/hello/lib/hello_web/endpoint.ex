@@ -11,6 +11,9 @@ defmodule HelloWeb.Endpoint do
   ]
 
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
+  socket "/socket", HelloWeb.UserSocket,
+    websocket: true,
+    longpoll: false
 
   # Serve at "/" the static files from "priv/static" directory.
   #
@@ -29,7 +32,10 @@ defmodule HelloWeb.Endpoint do
     plug Phoenix.LiveReloader
     plug Phoenix.CodeReloader
     plug Phoenix.Ecto.CheckRepoStatus, otp_app: :hello
+
+
   end
+
 
   plug Phoenix.LiveDashboard.RequestLogger,
     param_key: "request_logger",
