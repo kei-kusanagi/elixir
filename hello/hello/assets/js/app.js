@@ -26,8 +26,32 @@ import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 
+import socket from "./user_socket"
+
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken}})
+
+let channel = socket.channel("room:lobby", {})
+let chatInput = document.querySelector("#chat-input")
+let messagesContainer = document.querySelector("#messages")
+
+chatInput.addEventListener("keypress", event=> {
+    if (event.keyCode == 3) {
+        channel.push("new_msg", {body: chatInput.value})
+        chatInput.value = ''
+    }
+})
+
+channel.on("new_msg", payload => {
+    let messageItem = document.createElement("li")
+    messageItem.innerText = `[${Date()}] ${payload.body}`
+    messagesContainer.appendChild(messageItem)
+})
+
+channel.join()
+
+// me quede justo aqui
+export default socket
 
 // Show progress bar on live navigation and form submits
 topbar.config({barColors: {0: "#29d"}, shadowColor: "rgba(0, 0, 0, .3)"})
